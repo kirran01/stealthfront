@@ -3,6 +3,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 const Home = () => {
+    const [successMessage, setSuccessMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
     const [ticketInput, setTicketInput] = useState({
         ticketEmail: '',
         ticketProblem: ''
@@ -19,16 +21,31 @@ const Home = () => {
                 status: 'new'
             })
             if (res) {
-            console.log(res.data, 'rd')
+                console.log(res.data, 'rd')
+                setSuccessMessage(`Your ticket has been submitted 🥳 ! You will receive an email once your request has been resolved.`)
+                setInterval(() => {
+                    setSuccessMessage('')
+                }, 5000);
+                setTicketInput({
+                    ticketEmail: '',
+                    ticketProblem: ''
+                })
             }
         } catch (err) {
+            setErrorMessage(`Uh oh, something went wrong 😖 please try again later`)
             console.log(err)
         }
     }
-    const [successMessage, setSuccessMessage] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
     return (
         <div className='h-screen flex flex-col justify-evenly content-center items-center bg-cyan-50'>
+            {successMessage !== '' && <div>
+                <p>{successMessage}</p>
+            </div>
+            }
+            {errorMessage !== '' && <div>
+                <p>{errorMessage}</p>
+            </div>
+            }
             <div className='bg-white flex flex-col items-center rounded-lg drop-shadow-lg'>
                 <p className='m-5'>Create your ticket</p>
                 <form className='m-5 flex flex-col items-center' onSubmit={submitTicket}>

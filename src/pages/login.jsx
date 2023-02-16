@@ -36,7 +36,7 @@ const Login = () => {
     }
     return (
         <div className='h-screen flex flex-col justify-evenly content-center items-center bg-cyan-50'>
-           {errorMessage!==''&& <div className=''>
+            {errorMessage !== '' && <div>
                 <p>{errorMessage}</p>
             </div>}
             <div className='bg-white flex flex-col items-center rounded-lg drop-shadow-lg'>
