@@ -16,8 +16,11 @@ const Nav = () => {
                     <li>
                         <HomeIcon onClick={() => { navigate('/') }} sx={{ color: 'white', margin: '0px 8px 0px', cursor: 'pointer' }} />
                     </li>
-                    <Link className='text-white' to={'/tickets'}>
+                    <Link className='text-white mx-2' to={'/tickets'}>
                         Tickets
+                    </Link>
+                    <Link className='text-white mx-2' to={'/responses'}>
+                        Responses
                     </Link>
                 </div>
                 <li onClick={logOut} className='text-white cursor-pointer'>

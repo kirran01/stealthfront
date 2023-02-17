@@ -3,32 +3,23 @@ import Ticket from '../components/ticket';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Ticketpage = () => {
-    const [tickets, setTickets] = useState([])
-    useEffect(() => {
-        const getTickets = async () => {
-            try {
-                const res = await axios.get(`http://localhost:3000/tickets/get-tickets`, {
-                    headers: {
-                        authorization: `Bearer ${localStorage.getItem('authToken')}`
-                    }
-                })
-                if (res) {
-                    console.log(res.data, 'rd')
-                    setTickets(res.data)
-                }
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        getTickets()
-    }, [])
-
+const Ticketpage = ({ tickets, setTickets }) => {
     return (
         <div className='bg-cyan-50 flex flex-col items-center'>
-            <p className='text-center text-2xl'>Tickets</p>
+            <p className='text-center text-2xl m-5'>Tickets</p>
             <div>
-                <Ticket />
+                <button className='m-2 p-2 bg-slate-50 rounded-md'>New</button>
+                <button className='m-2 p-2 bg-slate-50 rounded-md'>Pending</button>
+                <button className='m-2 p-2 bg-slate-50 rounded-md'>Resolved</button>
+            </div>
+            <div>
+                {
+                    tickets.map(ticket => {
+                        return (
+                            <Ticket ticket={ticket} tickets={tickets} setTickets={setTickets} />
+                        )
+                    })
+                }
             </div>
         </div>
     );

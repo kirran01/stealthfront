@@ -47,7 +47,7 @@ const Home = () => {
             </div>
             }
             <div className='bg-white flex flex-col items-center rounded-lg drop-shadow-lg'>
-                <p className='m-5'>Create your ticket</p>
+                <p className='m-5'>Create a help ticket</p>
                 <form className='m-5 flex flex-col items-center' onSubmit={submitTicket}>
                     <label>Email</label>
                     <input className='border-gray border-2 rounded-md m-2' type="email" onChange={handleTicketInput} value={ticketInput.ticketEmail} name="ticketEmail" />
