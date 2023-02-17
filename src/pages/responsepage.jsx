@@ -24,7 +24,7 @@ const Responsepage = () => {
         getResponses()
     }, [])
     return (
-        <div className='flex flex-col items-center bg-cyan-50 p-3'>
+        <div className='flex flex-col items-center bg-cyan-50 p-3 min-h-screen'>
             <p className='text-2xl m-5'>Responses</p>
             <div>
                 {

@@ -1,10 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { TurnedInNotSharp } from '@mui/icons-material';
 
 const AResponse = ({ key, response, responses, setResponses }) => {
-    const [successMessage, setSuccessMessage] = useState('')
-    console.log(response, 'response')
     const deleteResponse = async (e) => {
         e.preventDefault()
         try {
@@ -14,15 +13,16 @@ const AResponse = ({ key, response, responses, setResponses }) => {
                 }
             })
             if (res) {
-                console.log(res.data, 'rd')
-                setSuccessMessage('Deleted')
+                const filteredForDelete = responses.filter(r => r._id !== response._id)
+                setResponses(filteredForDelete)
+
             }
         } catch (err) {
             console.log(err)
         }
     }
     return (
-        <div className='m-2 p-5 bg-white text-center w-md rounded-lg shadow-md border-slate-100 border-2'>
+        <div className='m-5 p-5 bg-white text-center w-md rounded-lg shadow-md border-slate-100 border-2'>
             <div className='flex flex-start'>
                 <button className='p-1 bg-red-400 hover:bg-red-500 text-white rounded-md text-sm' onClick={deleteResponse}>delete</button>
             </div>
