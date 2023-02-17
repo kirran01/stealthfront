@@ -13,7 +13,8 @@ const Ticketpage = ({ tickets, setTickets }) => {
                     authorization: `Bearer ${localStorage.getItem('authToken')}`
                 }
             });
-            const filteredTickets = res.data.filter((t) => t.status === status);
+            const reversedTickets=res.data.reverse()
+            const filteredTickets = reversedTickets.filter((t) => t.status === status);
             setTickets(filteredTickets);
         } catch (err) {
             console.log(err);
@@ -28,13 +29,13 @@ const Ticketpage = ({ tickets, setTickets }) => {
                 }
             })
             if (res) {
-                setTickets(res.data)
+                const reversedTickets = res.data.reverse();
+                setTickets(reversedTickets)
             }
         } catch (err) {
             console.log(err)
         }
     }
-
     return (
         <div className='bg-cyan-50 flex flex-col items-center min-h-screen'>
             <p className='text-center text-2xl m-5'>Tickets</p>

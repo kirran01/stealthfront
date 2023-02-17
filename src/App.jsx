@@ -23,7 +23,8 @@ function App() {
             }
           })
           if (res) {
-            setTickets(res.data)
+            const reversedTickets = res.data.reverse();
+            setTickets(reversedTickets)
           }
         } catch (err) {
           console.log(err)
