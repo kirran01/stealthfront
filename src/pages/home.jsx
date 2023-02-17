@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-const Home = () => {
+const Home = ({ tickets, setTickets }) => {
     const [successMessage, setSuccessMessage] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [ticketInput, setTicketInput] = useState({
@@ -30,6 +30,7 @@ const Home = () => {
                     ticketEmail: '',
                     ticketProblem: ''
                 })
+                setTickets([...tickets, res.data]);
             }
         } catch (err) {
             setErrorMessage(`Uh oh, something went wrong 😖 please try again later`)
