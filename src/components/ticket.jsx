@@ -8,8 +8,6 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [responseInput, setResponseInput] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
-    console.log(ticket, 't')
-    console.log(tickets, 'tickets')
     const customStyles = {
         content: {
             borderRadius: '10px',
@@ -81,7 +79,8 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
                 }
             })
             if (res) {
-                console.log(res)
+                let ticketsAfterDelete = tickets.filter((t) => t._id !== ticket._id)
+                setTickets(ticketsAfterDelete)
             }
         } catch (err) {
             console.log(err)

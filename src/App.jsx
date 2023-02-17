@@ -28,6 +28,7 @@ function App() {
     }
     getTickets()
   }, [])
+
   return (
     <div className="App">
       <Nav />
