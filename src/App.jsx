@@ -1,4 +1,4 @@
-import { useState, useEffect,useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from './context/auth.context';
 import axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
@@ -14,22 +14,24 @@ function App() {
   const { user, isLoggedIn, logOut } = useContext(AuthContext);
   const [tickets, setTickets] = useState([])
   useEffect(() => {
-    if(user){const getTickets = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3000/tickets/get-tickets`, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem('authToken')}`
+    if (user) {
+      const getTickets = async () => {
+        try {
+          const res = await axios.get(`${import.meta.env.VITE_API_URL}/tickets/get-tickets`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('authToken')}`
+            }
+          })
+          if (res) {
+            setTickets(res.data)
           }
-        })
-        if (res) {
-          setTickets(res.data)
+        } catch (err) {
+          console.log(err)
         }
-      } catch (err) {
-        console.log(err)
       }
+      getTickets()
     }
-    getTickets()
-  }}, [user])
+  }, [user])
 
   return (
     <div className="App">

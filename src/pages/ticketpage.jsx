@@ -1,6 +1,6 @@
 import React from 'react';
 import Ticket from '../components/ticket';
-import { useState, useEffect,useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth.context'
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ const Ticketpage = ({ tickets, setTickets }) => {
     const filterTickets = async (status, e) => {
         e.preventDefault();
         try {
-            const res = await axios.get(`http://localhost:3000/tickets/get-tickets`, {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/tickets/get-tickets`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('authToken')}`
                 }
@@ -22,7 +22,7 @@ const Ticketpage = ({ tickets, setTickets }) => {
     const getAllTickets = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.get(`http://localhost:3000/tickets/get-tickets`, {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/tickets/get-tickets`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('authToken')}`
                 }

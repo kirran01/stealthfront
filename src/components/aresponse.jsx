@@ -7,7 +7,7 @@ const AResponse = ({ key, response, responses, setResponses }) => {
     const deleteResponse = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.delete(`http://localhost:3000/response/delete-response/${response._id}`, {
+            const res = await axios.delete(`${import.meta.env.VITE_API_URL}/response/delete-response/${response._id}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('authToken')}`
                 }

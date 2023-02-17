@@ -28,7 +28,7 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
     const respondToTicket = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(`http://localhost:3000/response/create-response`, {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/response/create-response`, {
                 response: responseInput,
                 email: ticket.email
             },
@@ -49,7 +49,7 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
     const changeTicketStatus = async (ticketStatus, e) => {
         e.preventDefault()
         try {
-            const res = await axios.put(`http://localhost:3000/tickets/edit-ticket/${ticket._id}`, {
+            const res = await axios.put(`${import.meta.env.VITE_API_URL}/tickets/edit-ticket/${ticket._id}`, {
                 status: ticketStatus
             }, {
                 headers: {
@@ -73,7 +73,7 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
     const deleteTicket = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.delete(`http://localhost:3000/tickets/delete-ticket/${ticket._id}`, {
+            const res = await axios.delete(`${import.meta.env.VITE_API_URL}/tickets/delete-ticket/${ticket._id}`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('authToken')}`
                 }
@@ -89,7 +89,7 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
     return (
         <div className='flex flex-col items-center rounded-md shadow-md max-w-md bg-white my-5 p-2 relative'>
             <div className='flex justify-between w-full'>
-                <button className={`m-2 p-2 text-sm w-22 flex items-center rounded-md ${ticket.status === 'resolved' ? 'bg-green-500 hover:bg-green-600' : ticket.status === 'pending' ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-slate-50 hover:bg-slate-100'} hover:bg-slate-100`} onClick={() => { setOpenEdit(true) }}>{ticket.status}</button>
+                <button className={`m-2 p-2 text-sm w-22 flex items-center rounded-md ${ticket.status === 'resolved' ? 'bg-green-500 hover:bg-green-600' : ticket.status === 'pending' ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-slate-50 hover:bg-slate-100'} `} onClick={() => { setOpenEdit(true) }}>{ticket.status}</button>
                 {openEdit && <div className='flex flex-col items-center bg-white rounded-md shadow-md absolute z-10'>
                     <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('pending', e)}>pending</button>
                     <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('resolved', e)}>resolved</button>

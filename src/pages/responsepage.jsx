@@ -9,7 +9,7 @@ const Responsepage = () => {
     useEffect(() => {
         const getResponses = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/response/get-responses`, {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/response/get-responses`, {
                     headers: {
                         authorization: `Bearer ${localStorage.getItem('authToken')}`
                     }
@@ -30,7 +30,7 @@ const Responsepage = () => {
                 {
                     responses.map(response => {
                         return (
-                            <AResponse key={response._id} response={response} responses={responses} setResponses={setResponses}/>
+                            <AResponse key={response._id} response={response} responses={responses} setResponses={setResponses} />
                         )
                     })
                 }

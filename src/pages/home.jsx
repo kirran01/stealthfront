@@ -15,14 +15,14 @@ const Home = () => {
     const submitTicket = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:3000/tickets/create-ticket', {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/tickets/create-ticket`, {
                 problem: ticketInput.ticketProblem,
                 email: ticketInput.ticketEmail,
                 status: 'new'
             })
             if (res) {
                 console.log(res.data, 'rd')
-                setSuccessMessage(`Your ticket has been submitted 🥳 ! You will receive an email once your request has been resolved.`)
+                setSuccessMessage(`Your ticket has been submitted 🥳 !You will receive an email once your request has been resolved.`)
                 setInterval(() => {
                     setSuccessMessage('')
                 }, 5000);
