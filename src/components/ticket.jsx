@@ -3,9 +3,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import Modal from 'react-modal';
 const Ticket = ({ ticket, tickets, setTickets }) => {
+    const [statusInput, setStatusInput] = useState('')
+    const[openEdit,setOpenEdit]=useState(false)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [responseInput, setResponseInput] = useState('')
-    const[successMessage,setSuccessMessage]=useState('')
+    const [successMessage, setSuccessMessage] = useState('')
+    console.log(ticket,'t')
+    console.log(tickets,'tickets')
     const customStyles = {
         content: {
             borderRadius: '10px',
@@ -37,15 +41,48 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
                 })
             if (res) {
                 console.log(res.data, 'rd')
+                closeModal()
+                setResponseInput('')
             }
         } catch (err) {
             console.log(err)
         }
     }
+    const changeTicketStatus = async (ticketStatus, e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.put(`http://localhost:3000/tickets/edit-ticket/${ticket._id}`, {
+                status: ticketStatus
+            }, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            if (res) {
+                setOpenEdit(false)
+                const editedTicket = tickets.map((t) => {
+                    if (t._id === ticket._id) {
+                      return {...t, status: ticketStatus};
+                    }
+                    return t;
+                  });
+                  setTickets(editedTicket);
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
-        <div className='flex flex-col items-center rounded-md shadow-md max-w-md bg-white my-5 p-2'>
+        <div className='flex flex-col items-center rounded-md shadow-md max-w-md bg-white my-5 p-2 relative'>
             <div className='flex justify-between w-full'>
-                <p className='m-2 text-sm flex items-center'>{ticket.status}</p>
+                <button className='m-2 p-2 text-sm flex items-center bg-slate-50 hover:bg-slate-100 rounded-md' onClick={()=>{setOpenEdit(true)}}>{ticket.status}</button>
+                {openEdit&& <div className='flex flex-col items-center bg-white rounded-md shadow-md absolute z-10'>
+                    <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('pending', e)}>pending</button>
+                    <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('resolved', e)}>resolved</button>
+                    <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('new', e)}>new</button>
+                    <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={()=>{setOpenEdit(false)}}>cancel</button>
+                </div>}
                 <button className='bg-red-300 hover:bg-red-400 text-white rounded-lg m-2 p-2 text-sm'>delete</button>
             </div>
             <div className='flex justify-center items-center m-5'>

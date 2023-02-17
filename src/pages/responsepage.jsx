@@ -1,5 +1,4 @@
 import React from 'react';
-import Response from '../components/aresponse';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AResponse from '../components/aresponse';
@@ -31,7 +30,7 @@ const Responsepage = () => {
                 {
                     responses.map(response => {
                         return (
-                            <AResponse key={response._id} response={responses} responses={responses} setResponses={setResponses}/>
+                            <AResponse key={response._id} response={response} responses={responses} setResponses={setResponses}/>
                         )
                     })
                 }

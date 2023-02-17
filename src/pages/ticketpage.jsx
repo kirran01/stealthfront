@@ -16,7 +16,7 @@ const Ticketpage = ({ tickets, setTickets }) => {
                 {
                     tickets.map(ticket => {
                         return (
-                            <Ticket ticket={ticket} tickets={tickets} setTickets={setTickets} />
+                            <Ticket key={ticket._id} ticket={ticket} tickets={tickets} setTickets={setTickets} />
                         )
                     })
                 }
