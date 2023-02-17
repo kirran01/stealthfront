@@ -24,7 +24,7 @@ const Login = () => {
             .then(res => {
                 storeToken(res.data.authToken)
                 authenticateUser()
-                navigate('/')
+                navigate('/tickets')
             })
             .catch(err => {
                 console.log(err)

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect,useContext } from 'react'
+import { AuthContext } from './context/auth.context';
 import axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
 import Nav from './components/nav'
@@ -10,9 +11,10 @@ import Ticketpage from './pages/ticketpage'
 import './App.css'
 
 function App() {
+  const { user, isLoggedIn, logOut } = useContext(AuthContext);
   const [tickets, setTickets] = useState([])
   useEffect(() => {
-    const getTickets = async () => {
+    if(user){const getTickets = async () => {
       try {
         const res = await axios.get(`http://localhost:3000/tickets/get-tickets`, {
           headers: {
@@ -27,7 +29,7 @@ function App() {
       }
     }
     getTickets()
-  }, [])
+  }}, [user])
 
   return (
     <div className="App">
