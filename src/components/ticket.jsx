@@ -1,15 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 const Ticket = ({ ticket, tickets, setTickets }) => {
     const [statusInput, setStatusInput] = useState('')
-    const[openEdit,setOpenEdit]=useState(false)
+    const [openEdit, setOpenEdit] = useState(false)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [responseInput, setResponseInput] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
-    console.log(ticket,'t')
-    console.log(tickets,'tickets')
+    console.log(ticket, 't')
+    console.log(tickets, 'tickets')
     const customStyles = {
         content: {
             borderRadius: '10px',
@@ -62,28 +62,42 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
                 setOpenEdit(false)
                 const editedTicket = tickets.map((t) => {
                     if (t._id === ticket._id) {
-                      return {...t, status: ticketStatus};
+                        return { ...t, status: ticketStatus };
                     }
                     return t;
-                  });
-                  setTickets(editedTicket);
+                });
+                setTickets(editedTicket);
             }
         } catch (err) {
             console.log(err)
         }
     }
-
+    const deleteTicket = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.delete(`http://localhost:3000/tickets/delete-ticket/${ticket._id}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            if (res) {
+                console.log(res)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <div className='flex flex-col items-center rounded-md shadow-md max-w-md bg-white my-5 p-2 relative'>
             <div className='flex justify-between w-full'>
-                <button className='m-2 p-2 text-sm flex items-center bg-slate-50 hover:bg-slate-100 rounded-md' onClick={()=>{setOpenEdit(true)}}>{ticket.status}</button>
-                {openEdit&& <div className='flex flex-col items-center bg-white rounded-md shadow-md absolute z-10'>
+                <button className={`m-2 p-2 text-sm w-22 flex items-center rounded-md ${ticket.status === 'resolved' ? 'bg-green-500 hover:bg-green-600' : ticket.status === 'pending' ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-slate-50 hover:bg-slate-100'} hover:bg-slate-100`} onClick={() => { setOpenEdit(true) }}>{ticket.status}</button>
+                {openEdit && <div className='flex flex-col items-center bg-white rounded-md shadow-md absolute z-10'>
                     <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('pending', e)}>pending</button>
                     <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('resolved', e)}>resolved</button>
                     <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={(e) => changeTicketStatus('new', e)}>new</button>
-                    <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={()=>{setOpenEdit(false)}}>cancel</button>
+                    <button className='p-2 bg-slate-100 hover:bg-slate-200 rounded-md m-2 w-28' onClick={() => { setOpenEdit(false) }}>cancel</button>
                 </div>}
-                <button className='bg-red-300 hover:bg-red-400 text-white rounded-lg m-2 p-2 text-sm'>delete</button>
+                <button className='bg-red-300 hover:bg-red-400 text-white rounded-lg m-2 p-2 text-sm' onClick={deleteTicket}>delete</button>
             </div>
             <div className='flex justify-center items-center m-5'>
                 <p className='text-xl'>{ticket.email}</p>
@@ -91,7 +105,7 @@ const Ticket = ({ ticket, tickets, setTickets }) => {
             <div className='bg-slate-50 rounded-md w-full p-2 m-5 border-slate-100 border-2'>
                 <p>{ticket.problem}</p>
             </div>
-            <button className='bg-cyan-200 hover:bg-cyan-300 rounded-lg p-2 mb-4' onClick={openModal}>Respond</button>
+            <button className='bg-slate-100 hover:bg-slate-200 rounded-lg p-2 mb-4' onClick={openModal}>Respond</button>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
