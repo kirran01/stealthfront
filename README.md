@@ -22,3 +22,4 @@ This app is also deployed on netlify @ https://bejewelled-sunflower-449f28.netli
 ![Alt Text](./public/img/tickets.png)
 ![Alt Text](./public/img/category.png)
 ![Alt Text](./public/img/responses.png)
+![Alt Text](./public/img/respond.png)
