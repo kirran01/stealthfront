@@ -36,7 +36,7 @@ const Ticketpage = ({ tickets, setTickets }) => {
     }
 
     return (
-        <div className='bg-cyan-50 flex flex-col items-center'>
+        <div className='bg-cyan-50 flex flex-col items-center min-h-screen'>
             <p className='text-center text-2xl m-5'>Tickets</p>
             <div>
                 <button className='m-2 p-2 bg-slate-50 rounded-md' onClick={getAllTickets}>All</button>
