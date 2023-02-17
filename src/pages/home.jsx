@@ -39,6 +39,7 @@ const Home = ({ tickets, setTickets }) => {
     }
     return (
         <div className='h-screen flex flex-col justify-evenly content-center items-center bg-cyan-50'>
+            <p>Help Desk</p>
             {successMessage !== '' && <div>
                 <p>{successMessage}</p>
             </div>
